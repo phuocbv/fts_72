@@ -1,0 +1,17 @@
+{
+  "name": "fts.app",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Minh Hiep <hiep24892@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/framgia/fts_72",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
