@@ -127,4 +127,18 @@ abstract class BaseRepository implements RepositoryInterface
 
         return $this;
     }
+    
+    /**
+     * Save a new entity in repository
+     *
+     * @throws Exception
+     *
+     * @param array $input
+     *
+     * @return mixed
+     */
+    public function create(array $input)
+    {   
+        return $this->model->create($input);
+    }
 }
