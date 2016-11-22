@@ -7,6 +7,7 @@
             @include('admin.includes.sidebar')
         </div>
         <div class="col-md-9">
+            @include('layouts.includes.messages')
             @yield('sub-view')
         </div>
     </div>
