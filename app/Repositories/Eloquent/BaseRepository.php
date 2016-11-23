@@ -175,4 +175,18 @@ abstract class BaseRepository implements RepositoryInterface
     {
         return $this->model->destroy($id);
     }
+
+    /**
+     * Triggered inaccessible methods
+     *
+     * @param Method   $method
+     * @param array  $args
+     *
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        return call_user_func_array([$this->model, $method], $args);
+    }
+
 }

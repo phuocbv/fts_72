@@ -7,6 +7,8 @@ use App\Repositories\Eloquent\SubjectRepository;
 use App\Repositories\Contracts\SubjectRepositoryInterface;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Eloquent\QuestionRepository;
+use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -30,5 +32,6 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         App::bind(SubjectRepositoryInterface::class, SubjectRepository::class);
         App::bind(UserRepositoryInterface::class, UserRepository::class);
+        App::bind(QuestionRepositoryInterface::class, QuestionRepository::class);
     }
 }

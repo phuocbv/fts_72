@@ -20,7 +20,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     Route::get('/', 'HomeController@index'); 
     
     Route::resource('subjects', 'SubjectsController');
-
+    Route::resource('questions', 'QuestionsController');
     Route::resource('users', 'UsersController');
 });
 
@@ -29,4 +29,5 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
     Route::resource('users', 'UsersController', ['only' => [
         'edit', 'destroy', 'update',
     ]]);
+
 });
