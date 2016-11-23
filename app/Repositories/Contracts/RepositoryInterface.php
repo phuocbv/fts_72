@@ -59,4 +59,12 @@ interface RepositoryInterface
      * @return mixed
      */
     public function create(array $input);
+    /**
+     * Delete a entity in repository by id
+     *
+     * @param $id
+     *
+     * @return int
+     */
+    public function delete($id);
 }

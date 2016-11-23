@@ -5,6 +5,9 @@ namespace App\Repositories\Eloquent;
 use App\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Container\Container as App;
 use Illuminate\Database\Eloquent\Model;
+use Log;
+use DB;
+use Exception;
 
 abstract class BaseRepository implements RepositoryInterface
 {
@@ -159,5 +162,17 @@ abstract class BaseRepository implements RepositoryInterface
         $model->save();
 
         return $this;
+    }
+    
+    /**
+     * Delete a entity in repository by id
+     *
+     * @param $id
+     *
+     * @return int
+     */
+    public function delete($id)
+    {
+        return $this->model->destroy($id);
     }
 }
