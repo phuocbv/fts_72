@@ -89,5 +89,8 @@
 
     <!-- Scripts -->
     {!! HTML::script(elixir('js/app.js')); !!}
+    <script>
+        var confirmation = "{{ trans('common/dialogs.confirmation') }}";
+    </script>
 </body>
 </html>

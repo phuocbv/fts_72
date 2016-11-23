@@ -26,8 +26,12 @@
                     <td>{{ $subject->number_of_question }}</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a class="btn btn-default">{{ trans('common/buttons.edit') }}</a>
-                            <a class="btn btn-danger">{{ trans('common/buttons.delete') }}</a>
+                            {!! link_to_action('Admin\SubjectsController@edit', trans('common/buttons.edit'), [ 
+                                'id' => $subject->id 
+                            ], [
+                                'class' => 'btn btn-default'
+                            ]) !!}
+                            <a href="#" class="btn btn-danger">{{ trans('common/buttons.delete') }}</a>
                           </div>
                     </td>
                 </tr>
