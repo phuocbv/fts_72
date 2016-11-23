@@ -16,5 +16,4 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     {
         return 'App\Models\Subject';
     }
-    
 }

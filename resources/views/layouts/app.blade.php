@@ -57,10 +57,14 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    {!! Gate::allows('access-admin') ? 
-                                        "<li>" . link_to_action('Admin\HomeController@index', trans('common/buttons.admin-cp') , null, null) . "</li>" : ""; 
-                                    !!}
-                                    <li><a href="#">{{ trans('common/buttons.user-profile') }}</a></li>
+                                    @can('access-admin')
+                                        <li>
+                                            {{ link_to_action('Admin\HomeController@index', trans('common/buttons.admin-cp') , null, null) }}
+                                        </li>
+                                    @endcan
+                                    <li>
+                                        {{ link_to_action('Web\UsersController@edit', trans('common/buttons.user-profile'), Auth::user()->id, null) }}
+                                    </li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();

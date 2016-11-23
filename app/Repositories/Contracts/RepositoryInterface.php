@@ -4,7 +4,6 @@ namespace App\Repositories\Contracts;
 
 interface RepositoryInterface
 {
-
     /**
      * Retrieve all data of repository
      *
@@ -44,4 +43,9 @@ interface RepositoryInterface
      */
     public function find($id, $columns = ['*']);
 
+    public function findBy($column, $option);
+
+    public function where($conditions, $operator = null, $value = null);
+
+    public function eagerLoadTrashed();
 }
