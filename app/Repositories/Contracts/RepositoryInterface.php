@@ -48,4 +48,15 @@ interface RepositoryInterface
     public function where($conditions, $operator = null, $value = null);
 
     public function eagerLoadTrashed();
+
+    /**
+     * Save a new entity in repository
+     *
+     * @throws Exception
+     *
+     * @param array $input
+     *
+     * @return mixed
+     */
+    public function create(array $input);
 }
