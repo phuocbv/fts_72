@@ -11,6 +11,10 @@ return [
         10 => '10 questions',
         20 => '20 questions',
         30 => '30 questions',
+    ],
+    'role' => [
+        0 => 'Member',
+        1 => 'Admin',
     ]
 
 ];

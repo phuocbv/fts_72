@@ -29,4 +29,19 @@
             </li>
         </ul>
     </li>
+    <li role="presentation">
+        <a href="#"><strong>{{ trans('admin/user.user') }}</strong></a>
+        <ul class="nav nav-pills nav-stacked fa-ul">
+            <li class="{!! set_active(['admin/users/create']) !!}">
+                <a href="{!! action('Admin\UsersController@create') !!}">
+                    <i class="fa-li fa fa-caret-right"></i>{{ trans('common/buttons.create') }}
+                </a>
+            </li>
+            <li class="{!! set_active(['users/users']) !!}">
+                <a href="{!! action('Admin\UsersController@index') !!}">
+                    <i class="fa-li fa fa-caret-right"></i>{{ trans('common/buttons.list') }}
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>

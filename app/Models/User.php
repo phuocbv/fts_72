@@ -79,4 +79,9 @@ class User extends Authenticatable
     {
         return auth()->check() && auth()->id() == $this->id;
     }
+
+    public function isMember()
+    {
+        return $this->role == config('user.role.member');
+    }
 }
