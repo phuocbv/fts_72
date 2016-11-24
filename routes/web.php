@@ -20,6 +20,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     Route::get('/', 'HomeController@index'); 
     
     Route::resource('subjects', 'SubjectsController');
+
+    Route::resource('users', 'UsersController');
 });
 
 //User features
