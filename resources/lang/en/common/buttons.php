@@ -12,4 +12,7 @@ return [
     'send-link' => 'Send Link',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'update' => 'Update',
+    'reset' => 'Reset',
+    'delete-account' => 'Delete account',
 ];

@@ -12,6 +12,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @var
      */
     protected $model;
+    private $where;
  
     /**
      * @param App $app
@@ -84,7 +85,7 @@ abstract class BaseRepository implements RepositoryInterface
 
         return $this->model->paginate($limit, $columns);
     }
-    
+
     /**   
      * Find data by id
      *
@@ -96,5 +97,34 @@ abstract class BaseRepository implements RepositoryInterface
     public function find($id, $columns = ['*'])
     {
         return $this->model->findOrFail($id, $columns);
+    }
+
+    public function findBy($column, $option)
+    {
+        $data = $this->model->where($column, $option)->get();
+
+        return $data;
+    }
+
+    public function eagerLoadTrashed()
+    {
+        if (!is_null($this->withTrashed)) {
+            $this->model->withTrashed();
+        } elseif (!is_null($this->onlyTrashed)) {
+            $this->model->onlyTrashed();
+        }
+
+        return $this;
+    }
+
+    public function where($conditions, $operator = null, $value = null)
+    {
+        if (func_num_args() == 2) {
+            list($value, $operator) = [$operator, '='];
+        }
+
+        $this->where[] = [$conditions, $operator, $value];
+
+        return $this;
     }
 }

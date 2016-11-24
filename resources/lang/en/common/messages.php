@@ -2,4 +2,5 @@
 
 return [
     'empty-list' => 'There is not any items, you can create the first one.',
+    'update_error' => 'Update failed!',
 ];

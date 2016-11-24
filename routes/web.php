@@ -21,3 +21,10 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     
     Route::resource('subjects', 'SubjectsController');
 });
+
+//User features
+Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
+    Route::resource('users', 'UsersController', ['only' => [
+        'edit', 'destroy', 'update',
+    ]]);
+});
