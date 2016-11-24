@@ -15,4 +15,6 @@ return [
     'update' => 'Update',
     'reset' => 'Reset',
     'delete-account' => 'Delete account',
+    'add-answer' => 'Add Answer',
+    'remove-answer' => 'Remove',
 ];
