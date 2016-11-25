@@ -25,14 +25,22 @@
                     <td>{{ gmdate(config('subject.time-format'), $subject->duration) }}</td>
                     <td>{{ $subject->number_of_question }}</td>
                     <td>
-                        <div class="btn-group btn-group-sm">
-                            {!! link_to_action('Admin\SubjectsController@edit', trans('common/buttons.edit'), [ 
-                                'id' => $subject->id 
-                            ], [
-                                'class' => 'btn btn-default'
-                            ]) !!}
-                            <a href="#" class="btn btn-danger">{{ trans('common/buttons.delete') }}</a>
-                          </div>
+                        {!! Form::open([
+                            'action' => ['Admin\SubjectsController@destroy', $subject->id],
+                            'method' =>  'DELETE'
+                        ]) !!}
+                            <div class="btn-group btn-group-sm">
+                                {!! link_to_action('Admin\SubjectsController@edit', trans('common/buttons.edit'), [ 
+                                    'id' => $subject->id 
+                                ], [
+                                    'class' => 'btn btn-default'
+                                ]) !!}
+
+                                {!! Form::submit(trans('common/buttons.delete'), [
+                                    'class' => 'btn btn-danger'
+                                ])!!}  
+                            </div>
+                        {!! Form::close() !!}
                     </td>
                 </tr>
                 @endforeach
