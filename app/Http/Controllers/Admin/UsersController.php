@@ -73,7 +73,9 @@ class UsersController extends BaseController
      */
     public function show($id)
     {
-        //
+        $this->viewData['user'] = $this->userRepository->find($id);
+
+        return view('admin.user.detail', $this->viewData);
     }
 
     /**
@@ -84,7 +86,16 @@ class UsersController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $user = $this->userRepository->find($id);
+
+        if ($user->isMember()) {
+            $this->viewData['user'] = $user;
+
+            return view('admin.user.edit', $this->viewData);
+        }
+
+        return redirect()->action('Admin\UsersController@show', ['id' => $id])
+            ->withErrors(trans('admin/user.update.permission'));
     }
 
     /**
@@ -94,9 +105,27 @@ class UsersController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserManage $request, $id)
     {
-        //
+        $user = $this->userRepository->find($id);
+
+        try {
+            if ($user->isMember()) {
+                $data = $request->only('name', 'email', 'role');
+                $this->userRepository->update($data, $id);
+
+                return redirect()->action('Admin\UsersController@show', ['id' => $id])
+                    ->with('status', trans('messages.success.update'));
+            }
+
+            return redirect()->action('Admin\UsersController@show', ['id' => $id])
+                ->withErrors(trans('admin/user.update.permission'));
+            
+        } catch (Exception $e) {
+            Log::debug($e);
+
+            return back()->withErrors(trans('messages.errors.update'));
+        }
     }
 
     /**
