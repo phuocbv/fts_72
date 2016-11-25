@@ -23,11 +23,13 @@
                         </a>
                     </td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ trans('options.role.' .$user->role) }}</td>
+                    <td>{{ trans('options.role.' . $user->role) }}</td>
                     <td>
                     @if ($user->isMember())
                         <div class="btn-group btn-group-sm">
-                            <a class="btn btn-default">{{ trans('common/buttons.edit') }}</a>
+                            <a href="{{ action('Admin\UsersController@edit', ['id' => $user->id]) }}" class="btn btn-warning">
+                                {{ trans('common/buttons.edit') }}
+                            </a>
                             <a class="btn btn-danger">{{ trans('common/buttons.delete') }}</a>
                         </div>
                     @endif
