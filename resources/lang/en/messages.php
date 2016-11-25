@@ -10,5 +10,13 @@ return [
         'create' => 'Created successfully!',
         'update' => 'Updated successfully!',
     ],
-
+    'empty' => [
+        'update' => 'You tried to update an in-use question',
+    ],
+    'validator' => [
+        'answer' => [
+            'max' => 'The answer  :key must be less than :max characters.',
+            'required' => 'The answer  :key must be required',
+        ],
+    ],
 ];
