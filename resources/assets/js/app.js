@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('jquery-countdown');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -142,4 +143,59 @@ $(document).ready(function () {
 
         return false;
     });
+
+    //countdown
+    if (typeof isTesting !== 'undefined' && isTesting) {
+        var now = new Date();
+        var over = new Date(now.getTime() + remainingTime * 1000);
+
+        $('div#clock').countdown(over, function (e) {
+            $(this).text(e.strftime('%H:%M:%S'))
+        })
+            .on('finish.countdown', function (e) {
+                $('#time_spent').val(duration - remainingTime);
+                $('#exam').submit();
+            })
+            .on('update.countdown', function (e) {
+                remainingTime = e.offset.totalSeconds;
+            });
+
+        var updateTimeSpent = false;
+
+        $('input[name="commit"]').on('click', function (e) {
+            if (updateTimeSpent) {
+                updateTimeSpent = false;
+
+                return true;
+            }
+            e.preventDefault();
+            $('#time_spent').val(duration - remainingTime);
+            updateTimeSpent = true;
+            $(this).click();
+        })
+
+        $(window).bind('beforeunload',function (e) {
+            $('#time_spent').val(duration - remainingTime);
+            var formData = $('#exam').serializeArray();
+            $.ajax({
+                method: 'POST',
+                url: link,
+                data: formData,
+            })
+                .done(function (msg) {
+                    return true;
+                });
+
+            return alert;
+        });
+    } else {
+        $('.answer-container input[type="text"]').prop('disabled', true);
+        $('.answer-container input[type="radio"]').prop('disabled', true);
+        $('.answer-container input[type="checkbox"]').not('.check-text').prop('disabled', true);
+    }
+
+    if (typeof isChecked !== 'undefined' && isChecked) {
+        $('#check').remove();
+        $('.answer-container input').prop('disabled', true);
+    }
 })
