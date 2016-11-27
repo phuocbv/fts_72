@@ -51,6 +51,10 @@
                             <li><a href="{{ url('/login') }}">{{ trans('common/buttons.login') }}</a></li>
                             <li><a href="{{ url('/register') }}">{{ trans('common/buttons.register') }}</a></li>
                         @else
+                            <li>
+                                {{ link_to_action('Web\SuggestQuestionsController@index', 
+                                    trans('front-end/users.suggest-question.contribute-question') , null, null) }}
+                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>

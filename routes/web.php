@@ -29,5 +29,5 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
     Route::resource('users', 'UsersController', ['only' => [
         'edit', 'destroy', 'update',
     ]]);
-
+    Route::resource('suggest-questions', 'SuggestQuestionsController');
 });

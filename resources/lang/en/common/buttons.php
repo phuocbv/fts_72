@@ -16,5 +16,8 @@ return [
     'reset' => 'Reset',
     'delete-account' => 'Delete account',
     'add-answer' => 'Add Answer',
+    'create-suggest' => 'Create Suggest Question',
+    'add-answer' => 'Add answer',
+    'suggest-new-question' => 'Suggest New Question',
     'remove-answer' => 'Remove',
 ];

@@ -20,6 +20,9 @@ return [
         1 => 'Singlechoice',
         2 => 'Multiplechoice',
         3 => 'Text',
+    ],
+    'question-status' => [
+        0 => 'Inactive',
+        1 => 'Active',
     ]
-
 ];

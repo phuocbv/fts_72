@@ -8,5 +8,7 @@ return [
     'content' => 'Content',
     'type' => 'Type',
     'active' => 'Active',
-    'is-correct' => 'Correct?'
+    'is-correct' => 'Correct?',
+    'answer' => 'Answer',
+    'is-correct' => 'Correct?',
 ];
