@@ -111,6 +111,7 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
             'status' => $active,
             'type' => $input['type'],
         ];
+
         $question->forceFill($data['question'])->save();
         $question->systemAnswers()->delete();
         $question->systemAnswers()->createMany($input['answer']);
@@ -127,5 +128,14 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
         }
 
         return $this->model->destroy($id);
+    }
+
+    public function deleteSuggesQuestion($id)
+    {
+        $suggestQuestion = $this->model->findOrFail($id);
+        $suggestQuestion->destroy($id);
+        $suggestQuestion->systemAnswers()->delete();
+
+        return $this;
     }
 }

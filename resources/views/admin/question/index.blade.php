@@ -27,7 +27,7 @@
                             {{ trans('admin/question.types.' . $question->type) }}
                     </td>
                     <td>{{ str_limit($question->content, config('question.limit.content')) }}</td>
-                    <td>{{ $question->status }}</td>
+                    <td>{{ trans('options.question-status.' . $question->status) }}</td>
                     <td>{{ $question->subject->name }}</td>
                     <td>{{ str_limit($question->user->name, config('question.limit.name')) }}</td>
                     <td>

@@ -27,4 +27,13 @@ interface QuestionRepositoryInterface extends RepositoryInterface
      * @return mixed
      */
     public function updateQuestion(array $input, $id, $active);
+
+    public function createSuggestQuestion(array $input);
+
+    public function viewListSuggestQuestion($column, $option);
+
+    public function showSuggestQuestion($id, $columns = ['*']);
+
+    public function deleteSuggesQuestion($id);
+
 }
