@@ -6,7 +6,7 @@ use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SuggestQuestion;
-use App\Repositories\Contracts\SuggestQuestionRepositoryInterface as SuggestQuestionRepository;
+use App\Repositories\Contracts\QuestionRepositoryInterface as QuestionRepository;
 use App\Repositories\Contracts\SubjectRepositoryInterface as SubjectRepository;
 use Exception;
 use Log;
@@ -22,7 +22,7 @@ class SuggestQuestionsController extends BaseController
     private $subjectRepository;
  
     public function __construct (
-        SuggestQuestionRepository $suggestQuestionsRepository,
+        QuestionRepository $suggestQuestionsRepository,
         SubjectRepository $subjectRepository
     ) {
         $this->suggestQuestionsRepository = $suggestQuestionsRepository;
@@ -101,7 +101,16 @@ class SuggestQuestionsController extends BaseController
      */
     public function show($id)
     {
-        //
+        $sgQuestions = $this->suggestQuestionsRepository->showSuggestQuestion($id);
+
+        if ($sgQuestions->user_id == Auth::user()->id) {
+            $this->viewData['sgQuestions'] = $sgQuestions;
+
+            return view('web.suggest-questions.detail', $this->viewData);
+        }
+
+        return redirect()->action('Web\SuggestQuestionsController@index')
+            ->withErrors(trans('front-end/users.suggest-question.show-permission'));
     }
 
     /**
@@ -112,7 +121,17 @@ class SuggestQuestionsController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $this->viewData['subject'] = $this->subjectRepository->lists('name', 'id');
+        $sgQuestions = $this->suggestQuestionsRepository->showSuggestQuestion($id);
+
+        if ($sgQuestions->user_id == Auth::user()->id && $sgQuestions->status == config('question.status.inactive')) {
+            $this->viewData['sgQuestions'] = $sgQuestions;
+
+            return view('web.suggest-questions.edit', $this->viewData);
+        }
+
+        return redirect()->action('Web\SuggestQuestionsController@index')
+            ->withErrors(trans('front-end/users.suggest-question.edit-permission'));
     }
 
     /**
@@ -122,9 +141,45 @@ class SuggestQuestionsController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SuggestQuestion $request, $id)
     {
-        //
+        $this->viewData['subject'] = $this->subjectRepository->lists('name', 'id');
+        $sgQuestions = $this->suggestQuestionsRepository->showSuggestQuestion($id);
+
+        if ($sgQuestions->user_id != Auth::user()->id || $sgQuestions->status != config('question.status.inactive')) {
+            return redirect()->action('Web\SuggestQuestionsController@index')
+                ->withErrors(trans('front-end/users.suggest-question.edit-permission'));
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $data = $request->only('subject', 'content', 'type', 'answer');
+            $flag = false;
+            $active = config('question.status.inactive');
+            
+            foreach ($data['answer'] as $answer) {
+                if ($answer['is_correct'] == config('answer.correct.true')) {
+                    $flag = true;
+                    break;
+                }
+            }
+
+            if ($flag) {
+                $this->suggestQuestionsRepository->updateQuestion($data, $id, $active);
+                DB::commit();
+
+                return redirect()->back()->with('status', trans('messages.success.update'));
+            }
+
+            return redirect()->back()->withErrors(trans('front-end/users.suggest-question.answer-emty'));
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::debug($e);
+
+            return redirect()->back()
+                ->withErrors(trans('front-end/users.suggest-question.update-fail'));
+        }
     }
 
     /**

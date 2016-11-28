@@ -38,5 +38,8 @@ return [
         'answer-emty' => 'You must select at least one answer!',
         'answer-content-max' => 'The answer may not be greater than 255 characters!',
         'answer-content-required' => 'The answer field is required!',
+        'show-permission' => 'You can not see that suggest question!',
+        'edit-permission' => 'You can not edit that suggest question!',
+        'update-fail' => 'Update suggest question failed!',
     ],
 ];

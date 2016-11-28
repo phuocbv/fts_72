@@ -17,4 +17,5 @@ return [
     'answer' => 'Answer',
     'subject' => 'Subject',
     'answer' => 'Answer',
+    'status' => 'Status',
 ];

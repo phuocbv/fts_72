@@ -69,9 +69,38 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
      *
      * @return mixed
      */
-    public function updateQuestion(array $input, $id)
+
+    public function createSuggestQuestion(array $input)
+    {
+        $data['suggest_question'] = [
+            'user_id' => $this->auth->user()->id,
+            'subject_id' => $input['subject'],
+            'content' => $input['content'],
+            'status' => config('question.status.inactive'),
+            'type' => $input['type'],
+        ];
+ 
+        return $this->model->create($data['suggest_question'])
+            ->systemAnswers()->createMany($input['answer']);
+    }
+
+    public function viewListSuggestQuestion($column, $option)
+    {
+        $data = $this->model->where($column, $option)->with('subject')
+            ->paginate(config('repository.pagination.limit'));
+
+        return $data;
+    }
+
+    public function showSuggestQuestion($id, $columns = ['*'])
+    {
+        return $this->model->with('systemAnswers')->findOrFail($id, $columns);
+    }
+
+    public function updateQuestion(array $input, $id, $active)
     {
         $question = $this->model->findOrFail($id);
+
         if (is_null($question->results)) {
             return false;
         }
@@ -79,12 +108,10 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
         $data['question'] = [
             'subject_id' => $input['subject'],
             'content' => $input['content'],
-            'status' => $input['active'],
+            'status' => $active,
             'type' => $input['type'],
         ];
-
         $question->forceFill($data['question'])->save();
-
         $question->systemAnswers()->delete();
         $question->systemAnswers()->createMany($input['answer']);
 
