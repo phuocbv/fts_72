@@ -20,7 +20,6 @@ class QuestionsController extends BaseController
         QuestionRepository $questionRepository,
         SubjectRepository $subjectRepository
     ) {
- 
         $this->questionRepository = $questionRepository;
         $this->subjectRepository = $subjectRepository;
         $this->viewData['title'] = trans('admin/question.title');
@@ -86,7 +85,9 @@ class QuestionsController extends BaseController
      */
     public function show($id)
     {
-        //
+        $this->viewData['question'] = $this->questionRepository->find($id);
+
+        return view('admin.question.detail', $this->viewData);
     }
 
     /**

@@ -113,7 +113,6 @@ $(document).ready(function () {
 
         $(link).append(content.replace(/index/g, randomIndex));
 
-
         if ($('#question-type').val() == questionType.text) {
             $('.is_correct').prop('checked', true);
         }
