@@ -53,7 +53,7 @@ $(document).ready(function () {
     });
 
     //Prompt confirm dialog
-    $('.confirm').on('click', function () {
+    $('.confirm').not('delete-account').on('click', function () {
         return confirm(confirmation);
     });
 
@@ -132,5 +132,14 @@ $(document).ready(function () {
             $('.is_correct').not(this).prop('checked', false);
             $(this).prop('checked', true);
         }
+    });
+
+    $('#delete-account').on('click', function () {
+        event.preventDefault ();
+        if (confirm($deleteConfirm)) {
+            $('#delete-account-form').submit();
+        }
+
+        return false;
     });
 })
