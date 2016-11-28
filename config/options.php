@@ -15,5 +15,10 @@ return [
     'role' => [
         'member' => 0,
         'admin' => 1,
-    ]
+    ],
+    'question-type' => [
+        'singlechoice' => 1,
+        'multiplechoice' => 2,
+        'text' => 3,
+    ],
 ];

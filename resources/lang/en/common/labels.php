@@ -12,4 +12,8 @@ return [
     'created-at' => 'Created At',
     'updated-at' => 'Updated At',
     'role' => 'Role',
+    'content' => 'Content',
+    'type' => 'Type',
+    'answer' => 'Answer',
+    'subject' => 'Subject',
 ];
