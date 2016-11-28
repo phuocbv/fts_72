@@ -24,4 +24,5 @@ return [
     'finish' => 'Finish',
     'exam' => 'Exam',
     'do' => 'Do',
+    'check' => 'Check',
 ];

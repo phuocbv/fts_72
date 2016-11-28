@@ -44,4 +44,14 @@
             </li>
         </ul>
     </li>
+    <li role="presentation">
+        <a href="#"><strong>{{ trans('admin/exams.exams') }}</strong></a>
+        <ul class="nav nav-pills nav-stacked fa-ul">
+            <li class="{!! set_active(['admin/exams']) !!}">
+                <a href="{!! action('Admin\ExamsController@index') !!}">
+                    <i class="fa-li fa fa-caret-right"></i>{{ trans('common/buttons.list') }}
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>

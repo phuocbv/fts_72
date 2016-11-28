@@ -53,4 +53,13 @@ class Exam extends Model
 
         return parent::delete();
     }
+
+    /**
+     * Check if a user own exam
+     * @return boolean
+     */
+    public function isOwnExam()
+    {
+        return auth()->check() && auth()->id() == $this->user_id;
+    }
 }
