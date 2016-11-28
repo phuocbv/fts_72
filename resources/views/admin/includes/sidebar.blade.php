@@ -37,7 +37,7 @@
                     <i class="fa-li fa fa-caret-right"></i>{{ trans('common/buttons.create') }}
                 </a>
             </li>
-            <li class="{!! set_active(['users/users']) !!}">
+            <li class="{!! set_active(['admin/users']) !!}">
                 <a href="{!! action('Admin\UsersController@index') !!}">
                     <i class="fa-li fa fa-caret-right"></i>{{ trans('common/buttons.list') }}
                 </a>

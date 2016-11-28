@@ -84,4 +84,11 @@ class User extends Authenticatable
     {
         return $this->role == config('user.role.member');
     }
+
+    public function delete()
+    {
+        $this->exams()->delete();
+
+        return parent::delete();
+    }
 }

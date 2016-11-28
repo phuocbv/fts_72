@@ -38,4 +38,16 @@ class Result extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    public function examAnswers()
+    {
+        return $this->hasMany(ExamAnswer::class);
+    }
+
+    public function delete()
+    {
+        $this->examAnswers()->delete();
+
+        return parent::delete();
+    }
 }
