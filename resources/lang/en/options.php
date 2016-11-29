@@ -24,5 +24,9 @@ return [
     'question-status' => [
         0 => 'Inactive',
         1 => 'Active',
-    ]
+    ],
+    'question-is-correct' => [
+        0 => 'Wrong',
+        1 => 'Correct',
+    ],
 ];

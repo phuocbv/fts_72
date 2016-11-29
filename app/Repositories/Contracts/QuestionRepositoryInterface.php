@@ -26,5 +26,5 @@ interface QuestionRepositoryInterface extends RepositoryInterface
      *
      * @return mixed
      */
-    public function updateQuestion(array $input, $id);
+    public function updateQuestion(array $input, $id, $active);
 }

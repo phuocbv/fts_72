@@ -119,8 +119,9 @@ class QuestionsController extends BaseController
         DB::beginTransaction();
         try{
             $input = $request->only('subject', 'content', 'active', 'type', 'answer');
+            $active = $input['active'];
 
-            if ($this->questionRepository->updateQuestion($input, $id)) {
+            if ($this->questionRepository->updateQuestion($input, $id, $active)) {
                 DB::commit();
                 
                 return redirect()->action('Admin\QuestionsController@show', ['id' => $id])
