@@ -46,4 +46,11 @@ class Exam extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+
+    public function delete()
+    {
+        $this->result()->delete();
+
+        return parent::delete();
+    }
 }

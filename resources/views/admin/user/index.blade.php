@@ -26,12 +26,19 @@
                     <td>{{ trans('options.role.' . $user->role) }}</td>
                     <td>
                     @if ($user->isMember())
+                        {!! Form::open([
+                            'action' => ['Admin\UsersController@destroy', $user->id],
+                            'method' =>  'DELETE'
+                        ]) !!}
                         <div class="btn-group btn-group-sm">
                             <a href="{{ action('Admin\UsersController@edit', ['id' => $user->id]) }}" class="btn btn-warning">
                                 {{ trans('common/buttons.edit') }}
                             </a>
-                            <a class="btn btn-danger">{{ trans('common/buttons.delete') }}</a>
+                            {!! Form::submit(trans('common/buttons.delete'), 
+                                ['class' => 'btn btn-danger'])
+                            !!}
                         </div>
+                        {!! Form::close() !!}
                     @endif
                     </td>
                 </tr>
