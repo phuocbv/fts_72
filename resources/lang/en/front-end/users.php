@@ -41,5 +41,7 @@ return [
         'show-permission' => 'You can not see that suggest question!',
         'edit-permission' => 'You can not edit that suggest question!',
         'update-fail' => 'Update suggest question failed!',
+        'delete-permission' => 'You can not delete this suggest question',
+        'delete-fail' => 'Delete suggest question failed',
     ],
 ];

@@ -37,17 +37,24 @@
                                 <td>{{ $suggestQuestion->subject->name }}</td>
                                 <td>{{ trans('options.question-type.' . $suggestQuestion->type) }}</td>
                                 <td>{{ trans('options.question-status.' . $suggestQuestion->status) }}</td>
-                                @if ($suggestQuestion->status == config('question.status.inactive'))
                                 <td>
+                                @if ($suggestQuestion->status == config('question.status.inactive'))
+                                    {!! Form::open([
+                                        'action' => ['Web\SuggestQuestionsController@destroy', $suggestQuestion->id],
+                                        'method' =>  'DELETE'
+                                    ]) !!}
                                     <div class="btn-group btn-group-sm">
                                         <a href="{{ action('Web\SuggestQuestionsController@edit', ['id' => $suggestQuestion->id]) }}" 
                                             class="btn btn-warning">
                                             {{ trans('common/buttons.edit') }}
                                         </a>
-                                        <a class="btn btn-danger">{{ trans('common/buttons.delete') }}</a>
+                                        {!! Form::submit(trans('common/buttons.delete'), [
+                                            'class' => 'btn btn-danger'
+                                        ])!!}
                                     </div>
-                                </td>
+                                    {!! Form::close() !!}
                                 @endif
+                                </td>
                             </tr>
                             @endforeach
                         </table>

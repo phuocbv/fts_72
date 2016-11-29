@@ -190,6 +190,23 @@ class SuggestQuestionsController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $sgQuestions = $this->suggestQuestionsRepository->showSuggestQuestion($id);
+
+            if ($sgQuestions->user_id == Auth::user()->id && $sgQuestions->status == config('question.status.inactive')) {
+                $this->suggestQuestionsRepository->deleteSuggesQuestion($id);
+
+                return redirect()->action('Web\SuggestQuestionsController@index')
+                    ->with('status', trans('common/messages.success.delete'));
+            }
+
+            return redirect()->action('Web\SuggestQuestionsController@index')
+                ->withErrors(trans('front-end/users.suggest-question.delete-permission'));
+        } catch (Exception $e) {
+            Log::debug($e);
+        }
+
+        return redirect()->back()
+            ->withErrors(trans('front-end/users.suggest-question.delete-fail'));
     }
 }
