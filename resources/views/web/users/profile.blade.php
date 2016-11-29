@@ -49,7 +49,7 @@
                             {!! Form::submit(trans('common/buttons.update'), ['class' => 'btn btn-success']) !!}
                             {!! Form::reset(trans('common/buttons.reset'), ['class' => 'btn btn-default']) !!}
                             <a href="{{ action('Web\UsersController@destroy', ['id' => $user->id]) }}" class="btn btn-danger" 
-                                id="delete-account" onclick=" return confirm('{{ trans('front-end/users.delete-confirm') }}')">
+                                id="delete-account">
                                 <strong>{{ trans('common/buttons.delete-account') }}</strong>
                             </a>
                         </div>
@@ -57,7 +57,7 @@
                     {!! Form::close() !!}
 
                     {!! Form::open(['action' => ['Web\UsersController@destroy', $user->id], 'method' => 'DELETE', 
-                        'id' => 'delete-account']) !!}
+                        'id' => 'delete-account-form']) !!}
                     {!! Form::close() !!}
 
                 </div>
@@ -65,4 +65,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $deleteConfirm = '{{ trans('front-end/users.profile.delete-account-confirm') }}';
+</script>
 @endsection

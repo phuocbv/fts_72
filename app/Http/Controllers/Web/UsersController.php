@@ -86,6 +86,22 @@ class UsersController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $user = $this->userRepository->find($id);
+
+            if ($user->isCurrent()) {
+                $this->userRepository->delete($id);
+
+                return redirect()->back();
+            }
+
+            return redirect()->action('Web\UsersController@edit', ['id' => Auth::user()->id])
+                ->withErrors(trans('front-end/users.profile.delete-permission'));
+        } catch (Exception $e) {
+            Log::debug($e);
+        }
+
+         return redirect()->back()
+            ->withErrors(trans('front-end/users.profile.delete-fail'));
     }
 }

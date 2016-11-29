@@ -9,6 +9,9 @@ return [
         'update-button' => 'Update',
         'chatwork-id' => 'ChatWork ID',
         'chatwork-id-confirm' => 'ChatWork ID Confirm',
+        'delete-permission' => 'You can not delete that user!',
+        'delete-fail' => 'Delete failed!',
+        'delete-account-confirm' => 'Are you sure to delete your account!',
     ],
 
     'password' => [
