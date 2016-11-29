@@ -30,4 +30,8 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
         'edit', 'destroy', 'update',
     ]]);
     Route::resource('suggest-questions', 'SuggestQuestionsController');
+
+    Route::resource('exams', 'ExamsController', ['except' => [
+        'create', 'edit'
+    ]]);
 });

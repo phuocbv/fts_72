@@ -20,4 +20,8 @@ return [
     'add-answer' => 'Add answer',
     'suggest-new-question' => 'Suggest New Question',
     'remove-answer' => 'Remove',
+    'save' => 'Save',
+    'finish' => 'Finish',
+    'exam' => 'Exam',
+    'do' => 'Do',
 ];
