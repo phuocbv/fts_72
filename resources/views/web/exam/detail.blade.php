@@ -79,5 +79,6 @@
     var link = "{{ action('Web\ExamsController@update', ['id' => $data['exam']->id]) }}";
     var alert = "{{ trans('messages.load-page') }}";
     var isTesting = "{{ $data['exam']->status == config('exam.status.testing') }}";
+    var isChecked = "{{ $data['exam']->status == config('exam.status.checked') }}";
 </script>
 @endsection

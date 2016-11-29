@@ -9,6 +9,7 @@ use App\Repositories\Contracts\ExamRepositoryInterface as ExamRepository;
 use App\Http\Requests\StoreExam;
 use Log;
 use DB;
+use Gate;
 
 class ExamsController extends BaseController
 {
@@ -16,9 +17,12 @@ class ExamsController extends BaseController
      * @var questionRepository
      *
      * @var subjectRepository
+     *
+     * @var examRepository
      */
     private $questionRepository;
     private $subjectRepository;
+    private $examRepository;
  
     public function __construct(
         QuestionRepository $questionRepository,
@@ -89,9 +93,21 @@ class ExamsController extends BaseController
      */
     public function show($id)
     {
-        $this->viewData['data'] = $this->examRepository->showExam($id);
+        $exam = $this->examRepository->find($id);
 
-        return view('web/exam.detail', $this->viewData);
+        if ($exam->isOwnExam()) {
+            $this->viewData['data'] = $this->examRepository->showExam($id);
+
+            return view('web/exam.detail', $this->viewData);
+        }
+
+        if (Gate::allows('access-admin')) {
+            return redirect()->action('Admin\ExamsController@show', ['id' => $id])
+                ->with('status', trans('exam.admin-check'));
+        }
+
+        return redirect()->action('Web\ExamsController@index')
+            ->withErrors(trans('common/errors.forbidden'));
     }
 
     /**

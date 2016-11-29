@@ -18,5 +18,6 @@ return [
     'commit' => [
         'save' => 'Save',
         'finish' => 'Finish',
-    ]
+    ],
+    'limit' => 10,
 ];

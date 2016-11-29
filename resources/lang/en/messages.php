@@ -7,6 +7,8 @@ return [
         'update' => 'Failed to update a record in database due to a system error.',
         'delete' => 'Failed to delete a record in database due to a system error.',
         'create-exam' => 'Failed to initialize your exam',
+        'check' => 'The exam could not be checked',
+        'checked' => 'The exam has already be checked',
     ],
     'success' => [
         'create' => 'Created successfully!',
@@ -14,6 +16,7 @@ return [
         'delete' => 'Delete successfully!',
         'save-exam' => 'Your exam has been saved',
         'create-exam' => 'Your exam has been initialized',
+        'check' => 'The exam has been checked',
     ],
     'empty' => [
         'update' => 'You tried to update an in-use question',
