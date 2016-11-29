@@ -5,25 +5,24 @@
         <div class="panel-heading">{{ $title }}</div>
 
         <div class="panel-body">
-            
-            {!! Form::open(['action' => ['Admin\QuestionsController@store'], 'class' => 'form-horizontal']) !!}
+            {!! Form::open([
+                'action' => ['Admin\QuestionsController@update', $question->id],
+                'method' => 'PUT',
+                'class' => 'form-horizontal'
+            ]) !!}
                 <div class="form-group">
-                    {!! Form::label('subject', trans('common/labels.subject'), [
-                        'class' => 'col-sm-2 control-label'
-                    ]) !!}
+                    {!! Form::label('subject', trans('common/labels.subject'), ['class' => 'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
-                        {!! Form::select('subject', $subjectsList, old('subject'), [
+                        {!! Form::select('subject', $subjectsList, $question->subject->id, [
                             'placeholder' => trans('common/placeholders.options'),
                             'class' => 'form-control',
                         ]) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label(
-                        'content', trans('common/labels.content'), ['class' => 'col-sm-2 control-label']
-                    ) !!}
+                    {!! Form::label('content', trans('common/labels.content'), ['class' => 'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
-                        {!! Form::textarea('content', old('content'), [
+                        {!! Form::textarea('content', old('content') ? old('content') : $question->content, [
                             'class' => 'form-control',
                             'placeholder' => trans('common/placeholders.content')
                         ]) !!}
@@ -32,7 +31,7 @@
                 <div class="form-group">
                     {!! Form::label('type', trans('common/labels.type'), ['class' => 'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
-                        {!! Form::select('type', getOptions('options.question-type'), old('type') ? 'checked' : '', [
+                        {!! Form::select('type', getOptions('options.question-type'), $question->type, [
                             'placeholder' => trans('common/placeholders.options'),
                             'class' => 'form-control',
                             'id' =>  'question-type'
@@ -44,7 +43,9 @@
                         <div class="checkbox">
                             <label>
                                 {!! Form::hidden('active', config('answer.active.false')) !!}
-                                {!! Form::checkbox('active', config('answer.active.true'), old('active')) !!}
+                                {!! Form::checkbox('active', config('answer.active.true'),
+                                    $question->status ? 'checked' : old('active') ? 'checked' : ''
+                                ) !!}
                                 {{ trans('common/placeholders.active') }}
                             </label>
                         </div>
@@ -56,12 +57,13 @@
 
                 @if (old('answer'))
                     @foreach (old('answer') as $key => $answer)
+
                         <div class="form-group">
                             {!! Form::label('answer', trans('common/labels.answer'), [
                                 'class' => 'col-sm-2 control-label'
                             ]) !!}
                             <div class="col-sm-6">
-                                {!! Form::text('answer[' . $key . '][content]', old('answer[' . $key . '][content]'), [
+                                {!! Form::text('answer[' . $key . '][content]', $answer['content'], [
                                     'class' => 'form-control',
                                     'placeholder' => trans('common/placeholders.content')
                                 ]) !!}
@@ -71,13 +73,13 @@
                                 <div class="col-sm-2">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="hidden" value="{{ config('answer.correct.false') }}" name="{{ 'answer[' . $key . '][is_correct]' }}">
-                                            {!! Form::checkbox(
-                                                'answer[' . $key . '][is_correct]',
+                                            <input type="hidden" value="{{ config('answer.correct.false') }}" 
+                                                name="answer[{{ $key }}][is_correct]">
+                                            {!! Form::checkbox('answer[' . $key . '][is_correct]',
                                                 config('answer.correct.true'),
-                                                $answer['is_correct'] ? 'checked' : '',
-                                                ['class' => 'is_correct']
-                                            ) !!}
+                                                $answer['is_correct'] ?  'checked' : '', [
+                                                'class' => 'is_correct'
+                                            ]) !!}
                                             {{ trans('common/placeholders.is-correct') }}
                                         </label>
                                     </div>
@@ -92,12 +94,11 @@
                         </div>
                     @endforeach
                 @else
+                    @foreach ($question->systemAnswers as $key => $answer)
                     <div class="form-group">
-                        {!! Form::label('answer', trans('common/labels.answer'), [
-                            'class' => 'col-sm-2 control-label'
-                        ]) !!}
+                        {!! Form::label('answer', trans('common/labels.answer'), ['class' => 'col-sm-2 control-label']) !!}
                         <div class="col-sm-6">
-                            {!! Form::text('answer[0][content]', old('answer[0][content]'), [
+                            {!! Form::text('answer[' . $key . '][content]', $answer->content, [
                                 'class' => 'form-control',
                                 'placeholder' => trans('common/placeholders.content')
                             ]) !!}
@@ -107,13 +108,13 @@
                             <div class="col-sm-2">
                                 <div class="checkbox">
                                     <label>
-                                        {!! Form::hidden('answer[0][is_correct]', config('answer.correct.false')) !!}
-                                        {!! Form::checkbox(
-                                            'answer[0][is_correct]',
-                                            config('answer.correct.true'),
-                                            null,
-                                            ['class' => 'is_correct']
-                                        ) !!}
+                                        {!! Form::hidden('answer[' . $key . '][is_correct]',
+                                            config('answer.correct.false')) !!}
+                                        {!! 
+                                            Form::checkbox('answer[' . $key . '][is_correct]',
+                                            config('answer.active.true'),
+                                            $answer->is_correct ?  'checked' : '', ['class' => 'is_correct']) 
+                                        !!}
                                         {{ trans('common/placeholders.is-correct') }}
                                     </label>
                                 </div>
@@ -126,6 +127,7 @@
                         </div>
                         
                     </div>
+                    @endforeach
                 @endif
                 </div>
                 <!-- End of answers section -->
@@ -135,7 +137,7 @@
                         <button id="add-answer" class="btn btn-default">
                             {{ trans('common/buttons.add-answer') }}
                         </button>
-                        {!! Form::submit(trans('common/buttons.create'), [
+                        {!! Form::submit(trans('common/buttons.edit'), [
                             'class' => 'btn btn-primary'
                         ]) !!}
                     </div>
@@ -144,6 +146,6 @@
 
         </div>
     </div>
-    
+
     @include('admin.includes.add-answer-script')
 @endsection

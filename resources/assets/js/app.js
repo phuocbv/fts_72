@@ -130,6 +130,7 @@ $(document).ready(function () {
     $(document).on('change','.is_correct', function(){
     if ($('#question-type').val() == questionType.singlechoice){
             $('.is_correct').not(this).prop('checked', false);
+            $(this).prop('checked', true);
         }
     });
 })

@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Repositories\Contracts\QuestionRepositoryInterface as QuestionRepository;
 use App\Repositories\Contracts\SubjectRepositoryInterface as SubjectRepository;
 use App\Http\Requests\StoreQuestion;
+use App\Http\Requests\UpdateQuestion;
 use Log;
 use DB;
+use Exception;
 
 class QuestionsController extends BaseController
 {
@@ -98,7 +100,11 @@ class QuestionsController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $this->viewData['question'] = $this->questionRepository->find($id);
+        $this->viewData['subjectsList'] = $this->subjectRepository
+            ->lists('name', 'id');
+
+        return view('admin.question.edit', $this->viewData);
     }
 
     /**
@@ -108,9 +114,26 @@ class QuestionsController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateQuestion $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $input = $request->only('subject', 'content', 'active', 'type', 'answer');
+
+            if ($this->questionRepository->updateQuestion($input, $id)) {
+                DB::commit();
+                
+                return redirect()->action('Admin\QuestionsController@show', ['id' => $id])
+                    ->with('status', trans('messages.success.update'));
+            }
+            
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::debug($e);
+        }
+
+        return redirect()->action('Admin\QuestionsController@index')
+            ->withErrors(trans('messages.failed.update'));
     }
 
     /**
