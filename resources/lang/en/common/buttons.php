@@ -25,4 +25,5 @@ return [
     'exam' => 'Exam',
     'do' => 'Do',
     'check' => 'Check',
+    'chart' => 'Chart',
 ];
