@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ExamRepositoryInterface as ExamRepository;
-use App\Events\ExamChecked;
+use App\Jobs\SendExamReport;
 use DB;
 use Log;
 
@@ -136,9 +136,11 @@ class ExamsController extends BaseController
 
             $checkedExam = $this->examRepository->checkExam($input, $id);
 
-            if ($checkedExam) {
-                event(new ExamChecked($checkedExam));
+            if (!$checkedExam) {
+                throw new Exception();
             }
+
+            dispatch(new SendExamReport($checkedExam));
             DB::commit();
 
             return back()->with('status', trans('messages.success.check'));
