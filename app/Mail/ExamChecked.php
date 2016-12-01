@@ -37,6 +37,6 @@ class ExamChecked extends Mailable
     public function build()
     {
         return $this->from('admin@fts.app')
-                ->view('emails.exam.checked');
+            ->view('emails.exam.checked');
     }
 }
