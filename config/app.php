@@ -168,6 +168,8 @@ return [
          */
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
 
         //
 
@@ -180,7 +182,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+
     ],
 
     /*

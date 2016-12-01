@@ -21,4 +21,8 @@ return [
         'multiplechoice' => 2,
         'text' => 3,
     ],
+    'question-status' => [
+        'active' => 1,
+        'inactive' => 0,
+    ],
 ];
