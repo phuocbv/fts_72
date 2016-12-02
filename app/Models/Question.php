@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Kyslik\ColumnSortable\Sortable;
 
 class Question extends Model
 {
     use SoftDeletes;
     use Searchable;
+    use Sortable;
 
     /**
      * The attributes that should be mutated to dates.
@@ -18,6 +20,7 @@ class Question extends Model
      */
     protected $dates = ['deleted_at'];
 
+    public $sortable = ['id', 'status'];
     /**
      * The attributes that aren't mass assignable.
      *
