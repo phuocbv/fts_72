@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Question extends Model
 {
     use SoftDeletes;
+    use Searchable;
 
     /**
      * The attributes that should be mutated to dates.

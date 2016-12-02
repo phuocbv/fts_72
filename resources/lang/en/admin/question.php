@@ -10,5 +10,6 @@ return [
         1 => 'Singlechoice',
         2 => 'Multiplechoice',
         3 => 'Text',
-    ]
+    ],
+    'search-result' => 'Search Result',
 ];

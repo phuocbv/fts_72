@@ -6,7 +6,7 @@ use App\Repositories\Eloquent\BaseRepository;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use Illuminate\Container\Container as App;
 use Illuminate\Contracts\Auth\Factory as Auth;
-use App\Models\Question;
+use Illuminate\Support\Facades\Input;
 
 class QuestionRepository extends BaseRepository implements QuestionRepositoryInterface
 {
@@ -137,5 +137,22 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
         $suggestQuestion->systemAnswers()->delete();
 
         return $this;
+    }
+
+    public function searchQuestionFilter($data)
+    {
+        $query = $this->model->search($data['key-word']);
+
+        if ($data['subject_id'] != '') {
+            $query->where('subject_id', $data['subject_id']);
+        }
+
+        if ($data['status'] != ''){
+            $query->where('status', $data['status']);
+        }
+
+        $result = $query->paginate();
+
+        return $result;
     }
 }

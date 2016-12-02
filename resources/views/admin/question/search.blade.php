@@ -3,20 +3,20 @@
 @section('sub-view')
     <div class="panel panel-default">
         <div class="panel-heading">
-            {{ $title }}
+            {{ trans('admin/question.search-result') }}
             <hr>
             {!! Form::open(['action' => ['Admin\QuestionsController@search'], 'method' =>  'POST']) !!}
                 <div class="col-sm-4">
-                    {!! Form::text('key-word', old('key-word'),['class' => 'form-control']) !!}
+                    {!! Form::text('key-word', $key_word, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-sm-3">
-                    {!! Form::select('subject_id', $subjectsList, old('subject_id'), [
+                    {!! Form::select('subject_id', $subjectsList, $subject, [
                         'placeholder' => trans('common/placeholders.options'),
                         'class' => 'form-control',
                     ]) !!}
                 </div>
                 <div class="col-sm-3">
-                    {!! Form::select('status', getOptions('options.question-status'), old('status'), [
+                    {!! Form::select('status', getOptions('options.question-status'), $status, [
                         'placeholder' => trans('common/placeholders.options'),
                         'class' => 'form-control',
                     ]) !!}

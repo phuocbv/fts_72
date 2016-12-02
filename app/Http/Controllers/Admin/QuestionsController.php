@@ -34,6 +34,8 @@ class QuestionsController extends BaseController
      */
     public function index()
     {
+        $this->viewData['subjectsList'] = $this->subjectRepository
+            ->lists('name', 'id');
         $this->viewData['questions'] = $this->questionRepository
             ->with('subject', 'user')->paginate();
 
@@ -157,5 +159,18 @@ class QuestionsController extends BaseController
 
         return redirect()->action('Admin\QuestionsController@index')
             ->withErrors(trans('messages.errors.delete'));
+    }
+
+    public function search(Request $request)
+    {
+        $input = $request->only('key-word', 'subject_id', 'status');
+        $this->viewData['subjectsList'] = $this->subjectRepository->lists('name', 'id');
+        $this->viewData['questions'] = $this->questionRepository->searchQuestionFilter($input);
+        //send back filter choice
+        $this->viewData['key_word'] = $input['key-word'];
+        $this->viewData['subject'] = $input['subject_id'];
+        $this->viewData['status'] = $input['status'];
+
+        return view('admin.question.search', $this->viewData);
     }
 }

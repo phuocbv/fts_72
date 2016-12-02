@@ -10,7 +10,9 @@
         "laravelcollective/html": "^5.3.0",
         "barryvdh/laravel-debugbar": "^2.3",
         "khill/lavacharts" : "3.0.*",
-        "wataridori/chatwork-sdk": "^0.1.7"
+        "wataridori/chatwork-sdk": "^0.1.7",
+        "laravel/scout": "^1.1",
+        "algolia/algoliasearch-client-php": "^1.11"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

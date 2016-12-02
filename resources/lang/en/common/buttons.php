@@ -26,4 +26,5 @@ return [
     'do' => 'Do',
     'check' => 'Check',
     'chart' => 'Chart',
+    'search' => 'Search'
 ];
